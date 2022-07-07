@@ -1,9 +1,13 @@
 package com.devsuperior.movieflix.service;
 
+import com.devsuperior.movieflix.dto.UserDto;
 import com.devsuperior.movieflix.entities.Role;
 import com.devsuperior.movieflix.entities.User;
+import com.devsuperior.movieflix.exceptions.ResourceNotFoundException;
+import com.devsuperior.movieflix.exceptions.UnauthorizedException;
 import com.devsuperior.movieflix.repositories.RoleRepository;
 import com.devsuperior.movieflix.repositories.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,9 +23,34 @@ public class UserService implements UserDetailsService {
 
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    private final AuthService authService;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, AuthService authService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.authService = authService;
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto findById(Long id) {
+
+        validateSelfOrAdmin(id);
+
+        return userRepository.findById(id)
+                .map(UserDto::new)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource id: %d not found".formatted(id)));
+    }
+
+    private void validateSelfOrAdmin(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource id: %d not found".formatted(userId)));
+
+
+        User authenticated = authService.authenticated();
+
+        if (!user.getId().equals(authenticated.getId()) && !authenticated.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            throw new UnauthorizedException("Usuário não autorizado");
+        }
     }
     @Override
     @Transactional(readOnly = true)

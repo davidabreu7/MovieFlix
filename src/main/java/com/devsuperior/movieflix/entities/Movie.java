@@ -15,7 +15,7 @@ public class Movie {
     private String title;
     private String subTitle;
     private Integer year;
-    private String imgUri;
+    private String imgUrl;
     private String synopsis;
 
     @OneToMany(mappedBy = "movie")
@@ -28,12 +28,12 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(Long id, String title, String subTitle, Integer year, String imgUri, String synopsis, List<Review> reviews, Genre genre) {
+    public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, List<Review> reviews, Genre genre) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
         this.year = year;
-        this.imgUri = imgUri;
+        this.imgUrl = imgUrl;
         this.synopsis = synopsis;
         this.reviews = reviews;
         this.genre = genre;
@@ -71,12 +71,12 @@ public class Movie {
         this.year = year;
     }
 
-    public String getImgUri() {
-        return imgUri;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgUri(String imgUri) {
-        this.imgUri = imgUri;
+    public void setImgUrl(String imgUri) {
+        this.imgUrl = imgUri;
     }
 
     public String getSynopsis() {
@@ -123,7 +123,7 @@ public class Movie {
                 ", title='" + title + '\'' +
                 ", subTitle='" + subTitle + '\'' +
                 ", year=" + year +
-                ", imgUri='" + imgUri + '\'' +
+                ", imgUri='" + imgUrl + '\'' +
                 ", synopsis='" + synopsis + '\'' +
                 ", reviews=" + reviews +
                 ", genre=" + genre +
