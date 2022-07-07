@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.dto;
 
+import com.devsuperior.movieflix.entities.User;
+
 import java.util.Objects;
 
 public class UserDto {
@@ -12,6 +14,12 @@ public class UserDto {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
     }
 
     public Long getId() {

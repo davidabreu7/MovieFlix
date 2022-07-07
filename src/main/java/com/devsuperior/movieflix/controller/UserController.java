@@ -1,4 +1,4 @@
-package com.devsuperior.movieflix.controller.exception;
+package com.devsuperior.movieflix.controller;
 
 import com.devsuperior.movieflix.dto.UserDto;
 import com.devsuperior.movieflix.service.UserService;

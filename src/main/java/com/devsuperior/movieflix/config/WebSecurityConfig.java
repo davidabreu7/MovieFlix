@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public JwtUserPasswordAuthenticationFilter jwtLoginFilter() throws Exception {
         var filter = new JwtUserPasswordAuthenticationFilter(jwtConfig);
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setFilterProcessesUrl("/login");
+        filter.setFilterProcessesUrl("/oauth/token");
         return filter;
     }
 
@@ -70,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .addFilter(jwtLoginFilter())
-//                .addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, authConfig), JwtUserPasswordAuthenticationFilter.class)
+                .addFilter(jwtLoginFilter())
+                .addFilterAfter(new JwtTokenVerifierFilter(jwtConfig, authConfig), JwtUserPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/h2-console").permitAll()

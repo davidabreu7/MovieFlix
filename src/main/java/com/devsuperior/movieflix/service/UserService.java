@@ -45,7 +45,6 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource id: %d not found".formatted(userId)));
 
-
         User authenticated = authService.authenticated();
 
         if (!user.getId().equals(authenticated.getId()) && !authenticated.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
@@ -69,5 +68,13 @@ public class UserService implements UserDetailsService {
                 .toList();
         user.getRoles().clear();
         user.getRoles().addAll(roles);
+    }
+
+    public UserDto profile() {
+        User authenticated = authService.authenticated();
+
+        return userRepository.findById(authenticated.getId())
+                .map(UserDto::new)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource id: %d not found".formatted(authenticated.getId())));
     }
 }
