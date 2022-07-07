@@ -50,6 +50,14 @@ public class User implements UserDetails {
         this.reviews = reviews;
     }
 
+    public User (User user, List<Role> roles){
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.roles.addAll(roles);
+    }
+
     public Long getId() {
         return id;
     }
