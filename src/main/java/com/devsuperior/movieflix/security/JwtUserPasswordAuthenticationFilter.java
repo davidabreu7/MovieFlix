@@ -64,6 +64,7 @@ public class JwtUserPasswordAuthenticationFilter extends UsernamePasswordAuthent
         authConfig.setName(response.getHeader("email"));
         System.out.println(response.getHeader("email"));
         System.out.println(authConfig.getName());
+        System.out.println(authResult.getAuthorities());
         SecretKey secretKey = jwtConfig.getSecretKeyForSigning();
         String token = Jwts.builder()
                 .setSubject(response.getHeader("email"))
@@ -82,6 +83,7 @@ public class JwtUserPasswordAuthenticationFilter extends UsernamePasswordAuthent
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        System.out.println(response.getHeader("email"));
         AuthorizationError errorResponse = new AuthorizationError( "Unauthorized", failed.getMessage());
         response.setContentType("application/json");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

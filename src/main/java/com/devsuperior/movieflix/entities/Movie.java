@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.entities;
 
 import javax.persistence.*;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,7 @@ public class Movie {
     private Long id;
     private String title;
     private String subTitle;
+    @Column(name = "release_date")
     private Integer year;
     private String imgUrl;
     private String synopsis;
@@ -69,6 +71,10 @@ public class Movie {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+    
+    private Year intToYear(Integer year) {
+        return Year.of(year);
     }
 
     public String getImgUrl() {

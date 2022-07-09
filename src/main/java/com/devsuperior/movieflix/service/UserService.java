@@ -46,14 +46,14 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new ResourceNotFoundException("Resource id: %d not found".formatted(userId)));
 
         User authenticated = authService.authenticated();
-
-        if (!user.getId().equals(authenticated.getId()) && !authenticated.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+//&& !authenticated.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")
+        if (!user.getId().equals(authenticated.getId() )) {
             throw new UnauthorizedException("Usuário não autorizado");
         }
     }
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)  {
         User user =  userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         initRoles(user);

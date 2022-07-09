@@ -20,9 +20,10 @@ public class AuthService {
         this.authConfig = authConfig;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public User authenticated(){
         String username = authConfig.getName();
+        System.out.println( "username: " + username);
 
         User user = userRepository.findByEmail(username)
                .orElseThrow(() -> new UnauthorizedException("usuário inválido"));

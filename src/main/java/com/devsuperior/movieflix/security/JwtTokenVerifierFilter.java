@@ -43,10 +43,10 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            if (!request.getMethod().equals("GET")) {
-                response.setStatus(401);
-                return;
-            }
+//            if (!request.getMethod().equals("GET")) {
+//                response.setStatus(401);
+//                return;
+//            }
             response.setStatus(401);
 //            filterChain.doFilter(request, response);
             return;
