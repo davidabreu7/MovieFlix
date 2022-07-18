@@ -47,8 +47,8 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 //                response.setStatus(401);
 //                return;
 //            }
-            response.setStatus(401);
-//            filterChain.doFilter(request, response);
+//            response.setStatus(401);
+            filterChain.doFilter(request, response);
             return;
         }
         try {

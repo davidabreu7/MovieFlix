@@ -18,6 +18,7 @@ public class Movie {
     @Column(name = "release_date")
     private Integer year;
     private String imgUrl;
+    @Column(columnDefinition = "TEXT")
     private String synopsis;
 
     @OneToMany(mappedBy = "movie")
