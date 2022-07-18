@@ -1,9 +1,11 @@
-package com.devsuperior.movieflix.entities;
+package com.devsuperior.movieflix.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class ReviewDTO implements Serializable {
     private Long id;
+    @NotBlank
     private String text;
 
     private Long movieId;

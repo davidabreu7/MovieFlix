@@ -47,8 +47,8 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 //                response.setStatus(401);
 //                return;
 //            }
-//            response.setStatus(401);
-            filterChain.doFilter(request, response);
+            response.setStatus(401);
+//            filterChain.doFilter(request, response);
             return;
         }
         try {
@@ -77,11 +77,15 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
         catch (AuthenticationException | ServletException | IOException | JwtException e){
-            ObjectMapper objectMapper = new ObjectMapper();
-            AuthorizationError errorResponse = new AuthorizationError( "Unauthorized", e.getMessage());
-            response.setContentType("application/json");
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+            errorResponse(response, e);
         }
+    }
+
+    private void errorResponse(HttpServletResponse response, Exception e) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        AuthorizationError errorResponse = new AuthorizationError( "Unauthorized", e.getMessage());
+        response.setContentType("application/json");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
 }

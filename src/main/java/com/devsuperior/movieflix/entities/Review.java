@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
