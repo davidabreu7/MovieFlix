@@ -97,7 +97,7 @@ public class ReviewResourceIT {
 		reviewDTO.setMovieId(movieId);
 
 		String jsonBody = objectMapper.writeValueAsString(reviewDTO);
-		
+
 		ResultActions result =
 				mockMvc.perform(post("/reviews")
 						.header("Authorization", "Bearer " + accessToken)

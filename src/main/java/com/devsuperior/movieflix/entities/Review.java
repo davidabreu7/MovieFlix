@@ -1,7 +1,8 @@
 package com.devsuperior.movieflix.entities;
 
+import com.devsuperior.movieflix.dto.ReviewDTO;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,13 @@ public class Review {
     public Review(Long id, String text, User user, Movie movie) {
         this.id = id;
         this.text = text;
+        this.user = user;
+        this.movie = movie;
+    }
+
+    public Review(ReviewDTO reviewDTO, User user, Movie movie) {
+        this.id = reviewDTO.getId();
+        this.text = reviewDTO.getText();
         this.user = user;
         this.movie = movie;
     }
